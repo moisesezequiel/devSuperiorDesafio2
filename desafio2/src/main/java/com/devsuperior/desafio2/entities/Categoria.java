@@ -1,9 +1,16 @@
 package com.devsuperior.desafio2.entities;
 
 
-import jakarta.persistence.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_categoria" )
@@ -14,6 +21,9 @@ public class Categoria {
     private Long id;
 
     private String descricao;
+    
+    @OneToMany(mappedBy = "categoria")
+    private List<Atividade> atividades = new ArrayList<>();
 
     public Categoria(Long id, String descricao) {
         this.id = id;
@@ -35,8 +45,13 @@ public class Categoria {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    
 
-    @Override
+    public List<Atividade> getAtividades() {
+		return atividades;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
